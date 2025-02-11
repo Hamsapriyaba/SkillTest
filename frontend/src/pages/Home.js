@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaMoon, FaSun, FaUserCircle } from 'react-icons/fa';
 import { useTheme } from '../context/ThemeContext';
@@ -7,7 +7,20 @@ function Home() {
   const navigate = useNavigate();
   const { darkMode, setDarkMode } = useTheme(); // Using global theme
   const [profileOpen, setProfileOpen] = useState(false);
+  const [title, setTitle] = useState("Skill Test-Homepage");
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
+  const changeTitle = () => {
+    const newTitle = "Skill Test-Register";
+    setTitle(newTitle);
+    document.title = newTitle; // Updating the webpage title
+  };
 
+  const handleClick = () => {
+    changeTitle(); // Change title
+    navigate('/register'); // Navigate to register page
+  };
   return (
     <div className={`${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'} min-h-screen transition-all`}>
       
@@ -61,7 +74,7 @@ function Home() {
           Together we achieve more than any single person could ever do alone.
         </p>
         <button 
-          onClick={() => navigate('/register')} 
+          onClick={handleClick} 
           className="mt-10 px-8 py-4 bg-gradient-to-r from-green-400 to-blue-500 text-white font-semibold rounded-full hover:from-green-500 hover:to-blue-600 transition-transform transform hover:scale-105 shadow-lg"
         >
           Get Started

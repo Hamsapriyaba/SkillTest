@@ -38,15 +38,15 @@ function Login() {
         {/* Tabs for User & Corporate Login */}
         <div className="flex justify-center mb-6">
           <button
-            onClick={() => setActiveTab('user')}
+            onClick={() => setActiveTab('Corporate')}
             className={`flex items-center gap-2 px-6 py-2 rounded-t-lg font-semibold transition 
-                        ${activeTab === 'user' 
+                        ${activeTab === 'Corporate' 
                           ? darkMode 
                             ? "bg-gray-700 text-green-400" 
                             : "bg-gray-100 text-green-500" 
                           : "bg-transparent text-gray-400 hover:text-green-400"}`}
           >
-            <FaUser /> User Login
+            <FaBuilding /> Corporate Login
           </button>
           
         </div>
@@ -83,7 +83,7 @@ function Login() {
             type="submit"
             className="w-full py-3 bg-green-500 rounded font-bold hover:bg-green-600 transition duration-300"
           >
-             Login as User
+             Login as Corporate
           </button>
         </form>
 
@@ -94,7 +94,7 @@ function Login() {
           <div className="flex-grow h-px bg-gray-300"></div>
         </div>
 
-        {/* Google Login Button with Theme Adaptation */}
+        {/* Google Login Button with Theme Adaptation 
         <button 
           className={`flex items-center justify-center gap-3 w-full py-3 rounded transition duration-300 border 
             ${darkMode ? "bg-gray-700 text-white hover:bg-gray-600 border-gray-600" 
@@ -103,7 +103,7 @@ function Login() {
         >
           <img src="https://www.google.com/favicon.ico" alt="Google Logo" className="w-5 h-5" />
           <span className="font-medium text-sm">Continue with Google</span>
-        </button>
+        </button>*/}
 
         {/* Sign Up Link */}
         <p className="text-center mt-6 text-sm">

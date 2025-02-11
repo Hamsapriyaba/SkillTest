@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaArrowLeft, FaMoon, FaSun } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
@@ -10,9 +10,14 @@ function Register() {
     email: "",
     password: "",
     confirmPassword: "",
-    accountType: "user",  // Default to 'user'
+    accountType: "user", // Default to 'user'
   });
   const [errors, setErrors] = useState({});
+
+  // Set initial title when component mounts
+  useEffect(() => {
+    document.title = "Skill Test - Register";
+  }, []);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -39,14 +44,17 @@ function Register() {
 
     if (Object.keys(newErrors).length === 0) {
       alert("Registration successful!");
-
-      // Redirect based on account type
-      if (formData.accountType === "user") {
-        navigate("/complete-profile");
-      } else {
-        navigate("/corporate-dashboard");
-      }
+      navigate(formData.accountType === "user" ? "/complete-profile" : "/corporate-dashboard");
     }
+  };
+
+  const handleLoginClick = () => {
+    const newTitle =
+      formData.accountType === "user"
+        ? "Skill Test - User Login"
+        : "Skill Test - Corporate Login";
+    document.title = newTitle; // Change title based on account type
+    navigate(formData.accountType === "user" ? "/login" : "/corporate-login");
   };
 
   return (
@@ -109,10 +117,7 @@ function Register() {
         {/* Registration Form */}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label
-              className="block text-sm font-semibold mb-2"
-              htmlFor="name"
-            >
+            <label className="block text-sm font-semibold mb-2" htmlFor="name">
               Full Name
             </label>
             <input
@@ -131,10 +136,7 @@ function Register() {
           </div>
 
           <div className="mb-4">
-            <label
-              className="block text-sm font-semibold mb-2"
-              htmlFor="email"
-            >
+            <label className="block text-sm font-semibold mb-2" htmlFor="email">
               Email
             </label>
             <input
@@ -209,9 +211,7 @@ function Register() {
         <p className="text-center mt-4 text-sm">
           Already have an account?{" "}
           <button
-            onClick={() =>
-              navigate(formData.accountType === "user" ? "/login" : "/corporate-login")
-            }
+            onClick={handleLoginClick}
             className="text-green-400 hover:underline"
           >
             Login as {formData.accountType === "user" ? "User" : "Corporate"}

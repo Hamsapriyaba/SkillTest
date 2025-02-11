@@ -1,10 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaArrowLeft, FaMoon, FaSun } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
+const InputField = ({ type = "text", name, placeholder, onChange, required = false, className = "", ...props }) => (
+  <input
+    type={type}
+    name={name}
+    placeholder={placeholder}
+    onChange={onChange}
+    required={required}
+    className={`p-3 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 transition w-full ${className}`}
+    {...props}
+  />
+);
+
+const SelectField = ({ name, onChange, options, placeholder, className = "" }) => (
+  <select
+    name={name}
+    onChange={onChange}
+    className={`p-3 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 transition w-full ${className}`}
+  >
+    <option value="">{placeholder}</option>
+    {options.map((opt) => (
+      <option key={opt} value={opt}>
+        {opt}
+      </option>
+    ))}
+  </select>
+);
+
 const CompleteProfile = () => {
   const navigate = useNavigate();
-  const [darkMode, setDarkMode] = useState(true);
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem("darkMode") === "true";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("darkMode", darkMode);
+    document.documentElement.classList.toggle("dark", darkMode);
+  }, [darkMode]);
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -94,7 +128,6 @@ const CompleteProfile = () => {
             <InputField name="college" placeholder="College/University" onChange={handleChange} required />
             <SelectField name="degree" onChange={handleChange} options={degrees} placeholder="Select Degree" />
             <SelectField name="graduationYear" onChange={handleChange} options={graduationYears} placeholder="Graduation Year" />
-
             <SelectField name="state" onChange={handleChange} options={states} placeholder="Select State" />
             <SelectField name="city" onChange={handleChange} options={cities[formData.state] || []} placeholder="Select City" />
             <InputField type="url" name="linkedin" placeholder="LinkedIn Profile (optional)" onChange={handleChange} />
@@ -133,34 +166,5 @@ const CompleteProfile = () => {
     </div>
   );
 };
-
-// Reusable InputField Component
-const InputField = ({ type = "text", name, placeholder, onChange, required = false, className = "", ...props }) => (
-  <input
-    type={type}
-    name={name}
-    placeholder={placeholder}
-    onChange={onChange}
-    required={required}
-    className={`p-3 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 transition w-full ${className}`}
-    {...props}
-  />
-);
-
-// Reusable SelectField Component
-const SelectField = ({ name, onChange, options, placeholder, className = "" }) => (
-  <select
-    name={name}
-    onChange={onChange}
-    className={`p-3 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 transition w-full ${className}`}
-  >
-    <option value="">{placeholder}</option>
-    {options.map((opt) => (
-      <option key={opt} value={opt}>
-        {opt}
-      </option>
-    ))}
-  </select>
-);
 
 export default CompleteProfile;
