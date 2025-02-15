@@ -5,12 +5,12 @@ import { getStorage } from "firebase/storage";  // ✅ Import Firebase Storage
 
 // Your Firebase config
 const firebaseConfig = {
-    apiKey: "AIzaSyDoDu839M5LNah4Q0D_kuyrO8wUH-WESzA",
-    authDomain: "skilltest-11d1f.firebaseapp.com",
-    projectId: "skilltest-11d1f",
-    storageBucket: "skilltest-11d1f.appspot.com", // ❌ Your storageBucket was incorrect
-    messagingSenderId: "861523375300",
-    appId: "1:861523375300:web:30bd87ac32b1424a348591"
+    apiKey: "AIzaSyDsIrIHboOyhMMaGzOxTNmn-vpObdkM034",
+  authDomain: "skilltest-216f5.firebaseapp.com",
+  projectId: "skilltest-216f5",
+  storageBucket: "skilltest-216f5.firebasestorage.app",
+  messagingSenderId: "291902883662",
+  appId: "1:291902883662:web:afb537b7634f5df729801f"
 };
 
 // Initialize Firebase
