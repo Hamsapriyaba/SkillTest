@@ -33,6 +33,8 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     let newErrors = {};
+     
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$/;
 
     if (!formData.name) newErrors.name = "Full Name is required";
     if (!formData.email) newErrors.email = "Email is required";
@@ -41,7 +43,8 @@ function Register() {
       newErrors.confirmPassword = "Confirm Password is required";
     if (formData.password !== formData.confirmPassword)
       newErrors.confirmPassword = "Passwords do not match";
-
+    if (!passwordRegex.test(formData.password)) 
+      newErrors.password = "Password must have at least 1 uppercase, 1 lowercase, 1 special character, 1 number, and be at least 10 characters long";
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
