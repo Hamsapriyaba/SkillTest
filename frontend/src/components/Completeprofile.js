@@ -57,6 +57,17 @@ const CompleteProfile = () => {
     const { value, checked } = e.target;
     setFormData((prev) => ({ ...prev, skills: checked ? [...prev.skills, value] : prev.skills.filter((skill) => skill !== value) }));
   };
+  const handleChange1 = (e) => {
+    const { name, value } = e.target;
+
+    // Remove non-numeric characters
+    const numericValue = value.replace(/\D/g, "");
+
+    // Limit input to 10 digits
+    if (numericValue.length <= 10) {
+        setFormData((prev) => ({ ...prev, [name]: numericValue }));
+    }
+};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -86,7 +97,7 @@ const CompleteProfile = () => {
           <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <InputField name="fullName" placeholder="Full Name" onChange={handleChange} required />
             <InputField type="email" name="email" placeholder="Email" onChange={handleChange} required />
-            <InputField type="tel" name="phone" placeholder="Phone Number" onChange={handleChange} required />
+            <InputField type="text" name="phone" placeholder="Phone Number" pattern="\d{10}" maxlength="10" value={formData.phone} onChange={handleChange1} required />
             <InputField type="date" name="dob" onChange={handleChange} required />
             <SelectField name="gender" onChange={handleChange} options={["Male", "Female", "Other"]} placeholder="Select Gender" />
             <InputField name="college" placeholder="College/University" onChange={handleChange} required />

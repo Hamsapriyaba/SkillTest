@@ -33,17 +33,20 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     let newErrors = {};
-
+  
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$/;
+  
     if (!formData.name) newErrors.name = "Full Name is required";
     if (!formData.email) newErrors.email = "Email is required";
     if (!formData.password) newErrors.password = "Password is required";
-    if (!formData.confirmPassword)
-      newErrors.confirmPassword = "Confirm Password is required";
-    if (formData.password !== formData.confirmPassword)
+    if (!formData.confirmPassword) newErrors.confirmPassword = "Confirm Password is required";
+    if (formData.password !== formData.confirmPassword) 
       newErrors.confirmPassword = "Passwords do not match";
-
+    if (!passwordRegex.test(formData.password)) 
+      newErrors.password = "Password must have at least 1 uppercase, 1 lowercase, 1 special character, 1 number, and be at least 10 characters long";
+  
     setErrors(newErrors);
-
+  
     if (Object.keys(newErrors).length === 0) {
       try {
         const userCredential = await createUserWithEmailAndPassword(
@@ -51,13 +54,13 @@ function Register() {
           formData.email,
           formData.password
         );
-
+  
         await setDoc(doc(db, "users", userCredential.user.uid), {
           name: formData.name,
           email: formData.email,
           accountType: formData.accountType,
         });
-
+  
         alert("Registration successful!");
         navigate("/login");
       } catch (error) {
@@ -65,6 +68,7 @@ function Register() {
       }
     }
   };
+  
 
   const handleLoginClick = () => {
     const newTitle =
